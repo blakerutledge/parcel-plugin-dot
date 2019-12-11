@@ -1,0 +1,14 @@
+{
+  "name": "parcel-plugin-dot",
+  "version": "1.0.1",
+  "description": "Parcel plugin for doT.js files",
+  "main": "index.js",
+  "author": "Blake Rutledge <blake@blakerutledge.com>",
+  "fork": "Nordine M'LISSA <nordine.mlissa@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "dot": "*",
+    "parcel-bundler": "*"
+  }
+}
