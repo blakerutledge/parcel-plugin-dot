@@ -4,6 +4,15 @@ const dot = require("dot")
 const { Asset } = require("parcel-bundler")
 let { parse } = require('node-html-parser')
 
+
+let def = {
+	loadfile: ( filepath ) => {
+		return fs.readFileSync( path.join( __dirname,  '..', '..', 'src', 'frontend', filepath ) )
+	}
+}
+
+
+
 module.exports = class DotAsset extends Asset {
   constructor(name, pkg, options) {
     super(name, pkg, options);
@@ -25,7 +34,7 @@ module.exports = class DotAsset extends Asset {
 
 	let output = root.toString().split( '<include>' ).join( '' ).split( '</include>' ).join( '' )
 
-	return "module.exports = " + dot.template( output );
+	return "module.exports = " + dot.template( output, undefined, def );
 
   }
 
