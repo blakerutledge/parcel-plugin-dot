@@ -1,7 +1,9 @@
+
 let fs = require('fs')
 let path = require('path')
 const dot = require("dot")
-const { Asset } = require("parcel-bundler")
+
+import {Transformer} from '@parcel/plugin';
 let { parse } = require('node-html-parser')
 
 
@@ -13,26 +15,24 @@ let def = {
 
 
 
-module.exports = class DotAsset extends Asset {
-  constructor(name, pkg, options) {
-    super(name, pkg, options);
-    this.type = "js";
-  }
+module.exports = new Transformer( {
 
-  async generate() {
+	async transform({asset, options, config, resolve}) {
 
-	let root = parse( this.contents )
-	let includes = Array.prototype.slice.call( root.querySelectorAll('include') )
-	includes.forEach( x => {
-		let filepath = x.getAttribute('src')
-		if ( filepath ) {
-			let svg = fs.readFileSync( path.join( __dirname,  '..', '..', 'src', 'frontend', filepath ), 'utf-8' )
-			x.set_content( svg )
-			x.removeAttribute( 'src' )
-		}
-	} )
+		console.log( asset )
 
-	let output = root.toString().split( '<include>' ).join( '' ).split( '</include>' ).join( '' )
+		let root = parse( asset )
+		let includes = Array.prototype.slice.call( root.querySelectorAll('include') )
+		includes.forEach( x => {
+			let filepath = x.getAttribute('src')
+			if ( filepath ) {
+				let svg = fs.readFileSync( path.join( __dirname,  '..', '..', 'src', 'frontend', filepath ), 'utf-8' )
+				x.set_content( svg )
+				x.removeAttribute( 'src' )
+			}
+		} )
+
+		let output = root.toString().split( '<include>' ).join( '' ).split( '</include>' ).join( '' )
 
 	return "module.exports = " + dot.template( output, undefined, def );
 
