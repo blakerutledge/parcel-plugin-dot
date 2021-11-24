@@ -9,6 +9,7 @@
   "private": false,
   "dependencies": {
     "dot": "*",
+    "json-schema": "0.4.0",
     "parcel": "*"
   }
 }
