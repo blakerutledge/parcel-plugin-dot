@@ -9,6 +9,6 @@
   "private": false,
   "dependencies": {
     "dot": "*",
-    "parcel-bundler": "*"
+    "parcel": "*"
   }
 }
